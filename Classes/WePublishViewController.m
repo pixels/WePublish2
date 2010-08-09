@@ -97,11 +97,11 @@
 	NSString *path;
 	
 	path = [[NSString alloc] initWithFormat:@"%@/%@", [Util getLocalDocument], XML_DIRECTORY];
-	[fm createDirectoryAtPath:path attributes:nil];
+	[fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
 	[path release];
 	
 	path = [[NSString alloc] initWithFormat:@"%@/%@", [Util getLocalDocument], BOOK_DIRECTORY];
-	[fm createDirectoryAtPath:path attributes:nil];	
+	[fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
 	[path release];
 }
 
@@ -273,6 +273,18 @@
 
 }
 
+- (void)releaseBackground:(NSInteger)windowModeType {
+	NSMutableArray *targetList = (windowModeType = MODE_A) ? _aBgList : _bBgList;
+	
+	if (targetList) {
+		for (UIImageView *v in targetList) {
+			v.image = nil;
+			[v removeFromSuperview];
+		}
+		[targetList removeAllObjects];
+	}
+}
+
 - (void)releaseBooks:(BOOL)scrollHidden {
 	for (UIButton *button in _buttons) {
 		button.imageView.image = nil;
@@ -300,6 +312,7 @@
 		pageCount = [_bookCollection count] / (H_COUNT_B * W_COUNT_B) + 1;
 	}
 
+	[self releaseBackground:_windowMode];
 	for (i = 0; i < pageCount; i++) {
 		imageView = [[UIImageView alloc] init];
 		imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -519,18 +532,10 @@
 	
 	else if ([animationID isEqualToString:CHANGE_ORIENTATION_ANIM_ID]) {
 		if (_windowMode == MODE_A) {
-			for (UIImageView *v in _bBgList) {
-				v.image = nil;
-				[v removeFromSuperview];
-			}
-			[_bBgList removeAllObjects];
+			[self releaseBackground:MODE_B];
 		}
 		else {
-			for (UIImageView *v in _aBgList) {
-				v.image = nil;
-				[v removeFromSuperview];
-			}
-			[_aBgList removeAllObjects];
+			[self releaseBackground:MODE_A];
 		}
 		
 		[self setBooks:YES];
@@ -581,7 +586,7 @@
 //			  );
 
 		bookDir = [[NSString alloc] initWithFormat:@"%@/%@/%@", [Util getLocalDocument], BOOK_DIRECTORY, info.uuid];
-		NSLog(@"bookDir: %@", bookDir);
+//		NSLog(@"bookDir: %@", bookDir);
 		if ([fm fileExistsAtPath:bookDir]) {
 			if (info.oldVersion) {
 				// ここで削除
@@ -592,7 +597,7 @@
 			}
 			else {
 				// Update length
-				NSArray * files = [[NSFileManager defaultManager] directoryContentsAtPath:bookDir];
+				NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:bookDir error:nil];
 				[info setLength:[files count]];
 			}
 		}
@@ -632,7 +637,7 @@
 	
 	NSArray *files;
 	NSFileManager *fm = [NSFileManager defaultManager];
-	files = [[NSFileManager defaultManager] directoryContentsAtPath:tmpDir];
+	files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:tmpDir error:nil];
 	if ([files count] > 0) {
 		NSString *srcDir = [[NSString alloc] initWithFormat:@"%@/%@", tmpDir, [files objectAtIndex:0]];
 //		NSLog(@"srcDir: %@ outDir: %@", srcDir, outDir);
@@ -653,7 +658,7 @@
 	[fm removeItemAtPath:zipPath error:nil];
 	zipPath = nil;
 	
-	files = [[NSFileManager defaultManager] directoryContentsAtPath:outDir];
+	files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:outDir error:nil];
 	NSUInteger count = 1;
 	NSString *srcName;
 	NSString *outName;
@@ -769,6 +774,7 @@
 	
 	[self setMenuBarItems:NO list:YES trash:YES buy:YES];
 	[self releaseListView];
+	[self releaseBackground:_windowMode];
 	[self releaseBooks:YES];
 	
 	
@@ -809,6 +815,7 @@
 
 // 一覧ボタンが選択された時
 - (IBAction)onMenuListClick:(id)sender {
+	[self releaseBackground:_windowMode];
 	[self releaseBooks:YES];
 	
 	ListViewCtrl *ctrl;
@@ -826,6 +833,7 @@
 // 購入ボタンが選択されたとき
 - (IBAction)onMenuBuyClick:(id)sender {
 	if (USE_WEBKIT) {
+		[self releaseBackground:_windowMode];
 		[self releaseBooks:YES];
 		
 		BuyViewCtrl *ctrl;
