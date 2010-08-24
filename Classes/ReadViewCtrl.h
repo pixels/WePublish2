@@ -21,13 +21,13 @@
 	NSUInteger _selectPage;
 	ReadViewACtrl *_readViewACtrl;
 	ReadViewBCtrl *_readViewBCtrl;
-	UIButton *_lButton;
-	UIButton *_rButton;
+	UILabel *startLabel_;
+	UILabel *endLabel_;
 }
 
 @property (nonatomic, retain) IBOutlet UISlider *slider;
-@property (nonatomic, retain) IBOutlet UIButton *lButton;
-@property (nonatomic, retain) IBOutlet UIButton *rButton;
+@property (nonatomic, retain) IBOutlet UILabel *startLabel;
+@property (nonatomic, retain) IBOutlet UILabel *endLabel;
 
 - (void)setup:(NSString *)uuid selectPage:(NSUInteger)selectPage pageNum:(NSInteger)pageNum fakePage:(NSInteger)fakePage direction:(NSInteger)direction;
 - (void)initAnimation:(NSString *)animationID duration:(NSTimeInterval)duration;
