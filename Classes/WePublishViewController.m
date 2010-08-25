@@ -154,6 +154,10 @@
 	
 	for (i = 0; i < book_count; i++) {
 		page = i / HxW;
+		if ([_buttons count] <= i) {
+			break;
+		}
+		
 		btn = [_buttons objectAtIndex:i];
 		
 		if (currentPage_ == page) {
@@ -163,6 +167,7 @@
 			if (image_path) {
 				image = [[UIImage alloc] initWithContentsOfFile:image_path];
 				if (image) {
+					[btn setAlpha:1];
 					[btn setBackgroundImage:image forState:UIControlStateNormal];
 					[image release];
 				}		
@@ -181,6 +186,7 @@
 			[btn setShowsTouchWhenHighlighted:YES];
 			[btn setFrame:frame];
 			[btn setTitle:nil forState:UIControlStateNormal];
+			[btn setAlpha:0];
 			[btn setTag:i];
 			[btn addTarget:self action:@selector(onBookClick:) forControlEvents:UIControlEventTouchUpInside];
 			[_scrollView addSubview:btn];
