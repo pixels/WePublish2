@@ -24,11 +24,11 @@
 #import "Util.h"
 
 //#define BOOK_ANIMATION_SETUP
-#define W_BOOK 54
-#define H_BOOK 72
-#define W_COUNT_A 4
-#define H_COUNT_A 4
-#define W_COUNT_B 5
+#define W_BOOK 72
+#define H_BOOK 102
+#define W_COUNT_A 3
+#define H_COUNT_A 3
+#define W_COUNT_B 3
 #define H_COUNT_B 3
 #define LOGO_ANIM_ID @"logo_anim"
 #define SET_BOOK_ANIM_ID @"set_book_anim"
@@ -301,7 +301,7 @@
 			w_line = (i % HxW_A) % W_COUNT_A;
 			h_line = (i % HxW_A) / W_COUNT_A;
 			frame.origin.x = (W_MARGIN_A + W_BOOK) * w_line + W_MARGIN_A + page * WINDOW_AW;
-			frame.origin.y = 108 * h_line + 54;
+			frame.origin.y = 137 * h_line + 65;
 		}
 		else {
 			page = i / HxW_B;
