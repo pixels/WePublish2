@@ -112,7 +112,7 @@
 		targetPage = targetPage + 1;
 	}
 
-	[self setPage:targetPage];
+	[self setPage:targetPage small:YES];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -131,13 +131,13 @@
 		}
 	}
 	
-	[self setPage:_currentPage];
+	[self setPage:_currentPage small:NO];
 	[self releaseFarBooks:_currentPage];
 }
 
 - (void)releaseFarBooks:(NSInteger)targetPage {
 	for (NSInteger i = 1; i < _maxPage; i++) {
-		if (i < (targetPage - 1) || (targetPage + 1) < i) {
+		if (i < (targetPage - 2) || (targetPage + 2) < i) {
 			NSNumber *number = [NSNumber numberWithInteger:i];
 			if ([_booksList objectForKey:number]) {
 				[super releaseBook:number removeFromList:YES];
@@ -146,23 +146,23 @@
 	}
 }
 
-- (void)setPage:(NSInteger)selectPage {
+- (void)setPage:(NSInteger)selectPage small:(BOOL)small {
 	
 //	NSLog(@"page: %d", selectPage);
 	
-	if (selectPage == _currentPage)
-		return;
+	if (selectPage != _currentPage)
+		[super setPage:selectPage];
 	
-	[super setPage:selectPage];
-	
+	NSInteger readNum = small ? 3 : 5;
+	NSInteger readOffset = small ? 1 : 2;
 	NSInteger selectPageWithOffset;
-	for (NSInteger i = 0; i < 3; i++) {
-		selectPageWithOffset = selectPage + (i - 1);
+	for (NSInteger i = 0; i < readNum; i++) {
+		selectPageWithOffset = selectPage + (i - readOffset);
 		NSInteger pagePosition = selectPageWithOffset;
 		if (_direction == DIRECTION_LEFT)
 			pagePosition = _maxPage - pagePosition;
 		else {
-			pagePosition = pagePosition - 1;
+			pagePosition = pagePosition - readOffset;
 		}
 		
 		NSNumber *number = [NSNumber numberWithInteger:selectPageWithOffset];

@@ -189,18 +189,9 @@
 -(void)onAnimationEnd:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
 	
 	if ([animationID isEqualToString:CHANGE_ORIENTATION_ANIM_ID]) {
-		CGRect frame;
 		if (_windowMode == MODE_A) {
-			frame = _slider.frame;
-			frame.origin.y = 30;
-			_slider.frame = frame;
-			
 			[self cleanupCurrentView:MODE_B];
 		} else {
-			frame = _slider.frame;
-			frame.origin.y = 30;
-			_slider.frame = frame;
-			
 			[self cleanupCurrentView:MODE_A];
 		}
 		

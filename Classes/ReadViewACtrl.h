@@ -16,7 +16,7 @@
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender;
-- (void)setPage:(NSInteger)selectPage;
+- (void)setPage:(NSInteger)selectPage small:(BOOL)small;
 - (void)releaseFarBooks:(NSInteger)targetPage;
 
 @end
