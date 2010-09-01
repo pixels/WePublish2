@@ -12,9 +12,6 @@
 		0AFF6D4912239B480028F8C7 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AFF6D4812239B480028F8C7 /* libz.1.2.3.dylib */; };
 		0AFF6D4D12239B5F0028F8C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AFF6D4C12239B5F0028F8C7 /* Foundation.framework */; };
 		0AFF6D6212239BD00028F8C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AFF6D6112239BD00028F8C7 /* QuartzCore.framework */; };
-		0AFF6D7B12239C330028F8C7 /* MyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFF6D7812239C330028F8C7 /* MyScrollView.m */; };
-		0AFF6D7C12239C330028F8C7 /* ReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFF6D7A12239C330028F8C7 /* ReadView.m */; };
-		0AFF6D8112239CE60028F8C7 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFF6D8012239CE60028F8C7 /* Utilities.m */; };
 		1D3623260D0F684500981E51 /* WePublishAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* WePublishAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		28D7ACF80DDB3853001CB0EB /* WePublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* WePublishViewController.m */; };
@@ -72,12 +69,6 @@
 		0AFF6D4812239B480028F8C7 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		0AFF6D4C12239B5F0028F8C7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0AFF6D6112239BD00028F8C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		0AFF6D7712239C330028F8C7 /* MyScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScrollView.h; sourceTree = "<group>"; };
-		0AFF6D7812239C330028F8C7 /* MyScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScrollView.m; sourceTree = "<group>"; };
-		0AFF6D7912239C330028F8C7 /* ReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadView.h; sourceTree = "<group>"; };
-		0AFF6D7A12239C330028F8C7 /* ReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadView.m; sourceTree = "<group>"; };
-		0AFF6D7F12239CE60028F8C7 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
-		0AFF6D8012239CE60028F8C7 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* WePublishAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WePublishAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* WePublishAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WePublishAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* WePublish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WePublish.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,10 +184,6 @@
 		0AFF6D7612239C160028F8C7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0AFF6D7712239C330028F8C7 /* MyScrollView.h */,
-				0AFF6D7812239C330028F8C7 /* MyScrollView.m */,
-				0AFF6D7912239C330028F8C7 /* ReadView.h */,
-				0AFF6D7A12239C330028F8C7 /* ReadView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -358,8 +345,6 @@
 		702E088111F27DEA005C5C48 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				0AFF6D7F12239CE60028F8C7 /* Utilities.h */,
-				0AFF6D8012239CE60028F8C7 /* Utilities.m */,
 				702E076E11F1F86C005C5C48 /* FileDownloader.h */,
 				702E076F11F1F86C005C5C48 /* FileDownloader.m */,
 				7063DD7911E4AFC500A76A02 /* UIImageViewWithTouch.h */,
@@ -510,9 +495,6 @@
 				702E087D11F27DA2005C5C48 /* zip.c in Sources */,
 				702E087E11F27DA2005C5C48 /* ZipArchive.mm in Sources */,
 				702E0B4E11F33EBE005C5C48 /* LoginViewCtrl.m in Sources */,
-				0AFF6D7B12239C330028F8C7 /* MyScrollView.m in Sources */,
-				0AFF6D7C12239C330028F8C7 /* ReadView.m in Sources */,
-				0AFF6D8112239CE60028F8C7 /* Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
