@@ -51,7 +51,7 @@
 // Message
 #define WARNING_TITLE @"警告"
 #define BOOKMARK_MESSAGE @"続きから読みますか？"
-#define TRASH_WARNING_MESSAGE @"iPadに保存されたアカウントと本を削除します。アカウントを再設定後、本を再ダウンロードします。\nよろしいですか？"
+#define TRASH_WARNING_MESSAGE @"iPhoneに保存されたアカウントと本を削除します。アカウントを再設定後、本を再ダウンロードします。\nよろしいですか？"
 #define RELOAD_DATA_WARNING_MESSAGE @"データを再取得しますか？"
 #define AUTHENTICATION_ERROR_MESSAGE @"認証に失敗しました。"
 #define NETWORK_ERROR_MESSAGE @"ネットワークに接続されていません。"
