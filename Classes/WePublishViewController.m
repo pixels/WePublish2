@@ -167,8 +167,11 @@
 			if (image_path) {
 				image = [[UIImage alloc] initWithContentsOfFile:image_path];
 				if (image) {
+					CGSize imageSize = CGSizeMake(CGImageGetWidth(image.CGImage), CGImageGetHeight(image.CGImage));
+					imageSize = [Util makeAspectFitCGSize:imageSize target:btn.frame.size];
 					[btn setAlpha:1];
 					[btn setBackgroundImage:image forState:UIControlStateNormal];
+					[btn setFrame:CGRectMake(btn.frame.origin.x, btn.frame.origin.y, imageSize.width, imageSize.height)];
 					[image release];
 				}		
 				[image_path release];
@@ -294,21 +297,24 @@
 	NSInteger HxW_A = H_COUNT_A * W_COUNT_A;
 	NSInteger HxW_B = H_COUNT_B * W_COUNT_B;
 	NSInteger i = 0;
+	float offsetY;
 	for (UIButton *btn in _buttons) {
 		CGRect frame = btn.frame;
 		if (_windowMode == MODE_A) {
 			page = i / HxW_A;
 			w_line = (i % HxW_A) % W_COUNT_A;
 			h_line = (i % HxW_A) / W_COUNT_A;
+			offsetY = H_BOOK - frame.size.height;
 			frame.origin.x = (W_MARGIN_A + W_BOOK) * w_line + W_MARGIN_A + page * WINDOW_AW;
-			frame.origin.y = 137 * h_line + 65;
+			frame.origin.y = 137 * h_line + 65 + offsetY;
 		}
 		else {
 			page = i / HxW_B;
 			w_line = (i % HxW_B) % W_COUNT_B;
 			h_line = (i % HxW_B) / W_COUNT_B;
+			offsetY = H_BOOK - frame.size.height;
 			frame.origin.x = 190 * w_line + 60 + page * WINDOW_BW;
-			frame.origin.y = 234 * h_line + 74;
+			frame.origin.y = 234 * h_line + 74 + offsetY;
 		}
 		
 		btn.frame = frame;
