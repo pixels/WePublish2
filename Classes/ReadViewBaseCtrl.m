@@ -30,7 +30,7 @@
 	_maxPage = pageNum;
 }
 
-- (void)setPage:(NSInteger)selectPage {
+- (void)setPage:(NSInteger)selectPage small:(BOOL)small {
 	_currentPage = selectPage;
 	
 	if (_currentPage > _maxPage) {

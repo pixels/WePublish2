@@ -156,12 +156,12 @@
 
 - (void)setPage:(NSInteger)selectPage {
 
-//	NSLog(@"page: %d", selectPage);
+	NSLog(@"page: %d", selectPage);
 	
 	if (selectPage == _currentPage)
 		return;
 	
-	[super setPage:selectPage];
+	[super setPage:selectPage small:NO];
 	
 	NSInteger i;
 	NSInteger selectPageWithOffset;

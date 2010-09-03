@@ -27,11 +27,6 @@
 	
 	_scrollView.frame = CGRectMake(0, 0, WINDOW_AW, WINDOW_AH);
 	_scrollView.contentSize = CGSizeMake(WINDOW_AW * pageNum, WINDOW_AH);
-//	if (direction == DIRECTION_LEFT) {
-//		_scrollView.contentOffset = CGPointMake(WINDOW_AW * (pageNum - 1), 0);
-//	} else {
-//		_scrollView.contentOffset = CGPointMake(WINDOW_AW * 0, 0);
-//	}
 	
 	NSInteger scrollPointX;
 	if (_direction == DIRECTION_LEFT) {
@@ -41,7 +36,7 @@
 	}
 	
 	_scrollView.contentOffset = CGPointMake(_scrollView.frame.size.width * scrollPointX, 0);
-	[self setPage:selectPage];
+	[self setPage:selectPage small:NO];
 }
 
 - (BOOL)isNext {
@@ -155,10 +150,10 @@
 //	NSLog(@"page: %d", selectPage);
 	
 	if (selectPage != _currentPage)
-		[super setPage:selectPage];
+		[super setPage:selectPage small:small];
 	
-	NSInteger readNum = small ? 3 : 5;
-	NSInteger readOffset = small ? 1 : 2;
+	NSInteger readNum = small ? 3 : 3;
+	NSInteger readOffset = small ? 1 : 1;
 	NSInteger selectPageWithOffset;
 	for (NSInteger i = 0; i < readNum; i++) {
 		selectPageWithOffset = selectPage + (i - readOffset);
