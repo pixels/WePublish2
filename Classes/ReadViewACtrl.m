@@ -196,9 +196,9 @@
 	}
 }
 
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {  
-    return self.scrollView;
-}
+//- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {  
+//    return self.scrollView;
+//}
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
