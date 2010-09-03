@@ -119,7 +119,8 @@
 	NSInteger book_count = [_bookCollection count];
 	NSInteger i, page, h_line, w_line;
 	NSInteger HxW = H_COUNT_A * W_COUNT_A;
-	UIButton* btn;
+	UIButton *btn;
+	UIActivityIndicatorView *indicator;
 	
 	for (i = 0; i < book_count; i++) {
 		page = i / HxW;
@@ -133,6 +134,20 @@
 		[btn setTitle:nil forState:UIControlStateNormal];
 		[btn setTag:i];
 		[btn addTarget:self action:@selector(onBookClick:) forControlEvents:UIControlEventTouchUpInside];
+		
+		indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		[indicator setTag:BOOK_ACTIVITY_INDICATOR];
+		[indicator startAnimating];
+		[indicator setFrame:CGRectMake(
+									   (btn.frame.size.width / 2) - (indicator.frame.size.width / 2),
+									   (btn.frame.size.height / 2) - (indicator.frame.size.height / 2),
+									   indicator.frame.size.width,
+									   indicator.frame.size.height)
+		 ];
+		[indicator setHidden:NO];
+		[btn addSubview:indicator];
+		[indicator release];
+		
 		[_scrollView addSubview:btn];
 		[_buttons addObject:btn];
 	}
@@ -151,7 +166,8 @@
 	NSString *image_path;
 	UIButton* btn;
 	BookInfo *info;
-	
+	UIActivityIndicatorView *indicator;
+
 	for (i = 0; i < book_count; i++) {
 		page = i / HxW;
 		if ([_buttons count] <= i) {
@@ -169,10 +185,20 @@
 				if (image) {
 					CGSize imageSize = CGSizeMake(CGImageGetWidth(image.CGImage), CGImageGetHeight(image.CGImage));
 					imageSize = [Util makeAspectFitCGSize:imageSize target:btn.frame.size];
-					[btn setAlpha:1];
 					[btn setBackgroundImage:image forState:UIControlStateNormal];
 					[btn setFrame:CGRectMake(btn.frame.origin.x, btn.frame.origin.y, imageSize.width, imageSize.height)];
 					[image release];
+					
+					UIActivityIndicatorView *indicator = (UIActivityIndicatorView *)[btn viewWithTag:BOOK_ACTIVITY_INDICATOR];
+					if (indicator) {
+						[indicator setFrame:CGRectMake(
+													   (btn.frame.size.width / 2) - (indicator.frame.size.width / 2),
+													   (btn.frame.size.height / 2) - (indicator.frame.size.height / 2),
+													   indicator.frame.size.width,
+													   indicator.frame.size.height)
+						 ];
+						[indicator setHidden:YES];
+					}
 				}		
 				[image_path release];
 			}
@@ -189,11 +215,22 @@
 			[btn setShowsTouchWhenHighlighted:YES];
 			[btn setFrame:frame];
 			[btn setTitle:nil forState:UIControlStateNormal];
-			[btn setAlpha:0];
 			[btn setTag:i];
 			[btn addTarget:self action:@selector(onBookClick:) forControlEvents:UIControlEventTouchUpInside];
 			[_scrollView addSubview:btn];
 			[_buttons insertObject:btn atIndex:i];
+			indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+			[indicator setTag:BOOK_ACTIVITY_INDICATOR];
+			[indicator startAnimating];
+			[indicator setFrame:CGRectMake(
+										   (btn.frame.size.width / 2) - (indicator.frame.size.width / 2),
+										   (btn.frame.size.height / 2) - (indicator.frame.size.height / 2),
+										   indicator.frame.size.width,
+										   indicator.frame.size.height)
+			 ];
+			[indicator setHidden:NO];
+			[btn addSubview:indicator];
+			[indicator release];
 //			NSLog(@"release image: tag: %d", btn.tag);
 		}
 
@@ -297,24 +334,21 @@
 	NSInteger HxW_A = H_COUNT_A * W_COUNT_A;
 	NSInteger HxW_B = H_COUNT_B * W_COUNT_B;
 	NSInteger i = 0;
-	float offsetY;
 	for (UIButton *btn in _buttons) {
 		CGRect frame = btn.frame;
 		if (_windowMode == MODE_A) {
 			page = i / HxW_A;
 			w_line = (i % HxW_A) % W_COUNT_A;
 			h_line = (i % HxW_A) / W_COUNT_A;
-			offsetY = H_BOOK - frame.size.height;
 			frame.origin.x = (W_MARGIN_A + W_BOOK) * w_line + W_MARGIN_A + page * WINDOW_AW;
-			frame.origin.y = 137 * h_line + 65 + offsetY;
+			frame.origin.y = 137 * h_line + 65;
 		}
 		else {
 			page = i / HxW_B;
 			w_line = (i % HxW_B) % W_COUNT_B;
 			h_line = (i % HxW_B) / W_COUNT_B;
-			offsetY = H_BOOK - frame.size.height;
 			frame.origin.x = 190 * w_line + 60 + page * WINDOW_BW;
-			frame.origin.y = 234 * h_line + 74 + offsetY;
+			frame.origin.y = 234 * h_line + 74;
 		}
 		
 		btn.frame = frame;
