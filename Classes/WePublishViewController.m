@@ -285,6 +285,7 @@
 
 - (void)updateXML {
 	_updating = YES;
+	_activitiyView.hidden = NO;
 
 	[_xmlCtrl update:UPDATE_URL];
 }
