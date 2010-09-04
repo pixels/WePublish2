@@ -12,6 +12,7 @@
 #import "DirectionType.h"
 #import "UIImageViewWithTouch.h"
 
+#define USE_FLICK_PAGE_CHANGE NO
 #define PAGE_CHANGE_FLICK_LENGTH 40
 
 @implementation ReadViewACtrl
@@ -170,16 +171,18 @@
 //		NSLog(@"scrollViewDidEndDecelerating scrollZoomView.");
 		
 		if (_zoomChangePage) {
-			[_scrollZoomView setZoomScale:1 animated:YES];
-			[_scrollZoomView setHidden:YES];
-			[_scrollView setScrollEnabled:YES];
-			_zooming = NO;
-			
-			if (_zoomNextPage && [self isNext]) {
-				[self next];
-			}
-			else if ([self isPrev]){
-				[self prev];
+			if (USE_FLICK_PAGE_CHANGE) {
+				[_scrollZoomView setZoomScale:1 animated:YES];
+				[_scrollZoomView setHidden:YES];
+				[_scrollView setScrollEnabled:YES];
+				_zooming = NO;
+				
+				if (_zoomNextPage && [self isNext]) {
+					[self next];
+				}
+				else if ([self isPrev]){
+					[self prev];
+				}
 			}
 			
 			_zoomChangePage = NO;
