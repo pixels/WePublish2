@@ -12,6 +12,8 @@
 #import "DirectionType.h"
 #import "UIImageViewWithTouch.h"
 
+#define PAGE_CHANGE_FLICK_LENGTH 40
+
 @implementation ReadViewACtrl
 @synthesize scrollView = _scrollView;
 @synthesize scrollZoomView = _scrollZoomView;
@@ -119,7 +121,7 @@
 		float zsw = _scrollZoomView.frame.size.width;
 		float zox = _scrollZoomView.contentOffset.x;
 		float zzs = _scrollZoomView.zoomScale;
-		float pageChangeOffset = 32 * zzs;
+		float pageChangeOffset = PAGE_CHANGE_FLICK_LENGTH * zzs;
 		
 		if (zox < -pageChangeOffset) {
 			if (_direction == DIRECTION_LEFT) {
