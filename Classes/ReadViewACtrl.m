@@ -14,12 +14,13 @@
 
 @implementation ReadViewACtrl
 @synthesize scrollView = _scrollView;
+@synthesize scrollZoomView = _scrollZoomView;
+@synthesize imageZoomView = _imageZoomView;
+@synthesize zooming = _zooming;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	_scrollView.delegate = self;
 }
 
 - (void)setup:(NSString *)uuid selectPage:(NSUInteger)selectPage pageNum:(NSInteger)pageNum direction:(NSInteger)direction {
@@ -103,35 +104,85 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
-	CGFloat pageWidth = _scrollView.frame.size.width;  
-    NSInteger targetPage = floor((_scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-	if (_direction == DIRECTION_LEFT)
-		targetPage = _maxPage - targetPage;
-	else {
-		targetPage = targetPage + 1;
+	if (sender == _scrollView) {
+		CGFloat pageWidth = _scrollView.frame.size.width;  
+		NSInteger targetPage = floor((_scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+		if (_direction == DIRECTION_LEFT)
+			targetPage = _maxPage - targetPage;
+		else {
+			targetPage = targetPage + 1;
+		}
+		
+		[self setPage:targetPage small:YES];
 	}
-
-	[self setPage:targetPage small:YES];
+	else if (sender == _scrollZoomView) {
+		float zsw = _scrollZoomView.frame.size.width;
+		float zox = _scrollZoomView.contentOffset.x;
+		float zzs = _scrollZoomView.zoomScale;
+		float pageChangeOffset = 32 * zzs;
+		
+		if (zox < -pageChangeOffset) {
+			if (_direction == DIRECTION_LEFT) {
+				_zoomNextPage = YES;
+				_zoomChangePage = YES;
+			}
+			else {
+				_zoomNextPage = NO;
+				_zoomChangePage = YES;
+			}
+		}
+		else if (zox > zsw * (zzs - 1) + pageChangeOffset) {
+			if (_direction == DIRECTION_LEFT) {
+				_zoomNextPage = NO;
+				_zoomChangePage = YES;
+			}
+			else {
+				_zoomNextPage = YES;
+				_zoomChangePage = YES;
+			}
+		}
+	}
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
 
-	if (_scrollOffsetX > scrollView.contentOffset.x) {
-		if (_direction == DIRECTION_LEFT) {
-//			NSLog(@"scrollViewDidEndScrollingAnimation Next");
-		} else {
-//			NSLog(@"scrollViewDidEndScrollingAnimation Prev");
-		}
-	} else {
-		if (_direction == DIRECTION_LEFT) {
-//			NSLog(@"scrollViewDidEndScrollingAnimation Prev");
-		} else {
-//			NSLog(@"scrollViewDidEndScrollingAnimation Next");
+	if (scrollView == _scrollView) {
+//		if (_scrollOffsetX > scrollView.contentOffset.x) {
+//			if (_direction == DIRECTION_LEFT) {
+//				NSLog(@"scrollViewDidEndScrollingAnimation Next");
+//			} else {
+//				NSLog(@"scrollViewDidEndScrollingAnimation Prev");
+//			}
+//		} else {
+//			if (_direction == DIRECTION_LEFT) {
+//				NSLog(@"scrollViewDidEndScrollingAnimation Prev");
+//			} else {
+//				NSLog(@"scrollViewDidEndScrollingAnimation Next");
+//			}
+//		}
+		
+		[self setPage:_currentPage small:NO];
+		[self releaseFarBooks:_currentPage];
+	}
+	else if (scrollView == _scrollZoomView) {
+//		NSLog(@"scrollViewDidEndDecelerating scrollZoomView.");
+		
+		if (_zoomChangePage) {
+			[_scrollZoomView setZoomScale:1 animated:YES];
+			[_scrollZoomView setHidden:YES];
+			[_scrollView setScrollEnabled:YES];
+			_zooming = NO;
+			
+			if (_zoomNextPage && [self isNext]) {
+				[self next];
+			}
+			else if ([self isPrev]){
+				[self prev];
+			}
+			
+			_zoomChangePage = NO;
 		}
 	}
-	
-	[self setPage:_currentPage small:NO];
-	[self releaseFarBooks:_currentPage];
 }
 
 - (void)releaseFarBooks:(NSInteger)targetPage {
@@ -188,12 +239,47 @@
 			[image_path release];
 			[documentDir release];
 		}
+		
+		if (selectPage == selectPageWithOffset) {
+			UIImageViewWithTouch *iv = (UIImageViewWithTouch *)[_booksList objectForKey:number];
+			[_imageZoomView setImage:iv.image];
+		}
 	}
 }
 
-//- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {  
-//    return self.scrollView;
-//}
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {  
+
+	if (scrollView == _scrollView) {
+		[_scrollZoomView setHidden:NO];
+		[_scrollZoomView setZoomScale:_scrollZoomView.zoomScale + 0.05];
+//		NSLog(@"viewForZoomingInScrollView _scrollView");
+	}
+	else if (scrollView == _scrollZoomView) {
+//		NSLog(@"viewForZoomingInScrollView _scrollZoomView");
+		if (!_zooming) {
+			_zooming = YES;
+			[_scrollView setScrollEnabled:NO];
+		}
+		
+		return self.imageZoomView;
+	}
+	
+	return nil;
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale {
+//	NSLog(@"scrollViewDidEndZooming");
+	
+	if (scrollView == _scrollZoomView) {
+		if (_zooming) {
+			if (_scrollZoomView.zoomScale <= 1) {
+				_zooming = NO;
+				[_scrollZoomView setHidden:YES];
+				[_scrollView setScrollEnabled:YES];
+			}
+		}
+	}
+}
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -211,6 +297,8 @@
 
 
 - (void)dealloc {
+	[self.imageZoomView release];
+	[self.scrollZoomView release];
 	[self.scrollView release];
     [super dealloc];
 }

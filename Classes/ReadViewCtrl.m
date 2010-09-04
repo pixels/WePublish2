@@ -112,7 +112,7 @@
 	
 	CGRect frame = self.view.frame;
 	if (_windowMode == MODE_A) {
-		if (![_readViewACtrl isNext])
+		if (![_readViewACtrl isNext] || _readViewACtrl.zooming)
 			return;
 		
 		[_readViewACtrl next];
@@ -139,7 +139,7 @@
 - (void)pagePrev {
 	
 	if (_windowMode == MODE_A) {
-		if (![_readViewACtrl isPrev])
+		if (![_readViewACtrl isPrev] || _readViewACtrl.zooming)
 			return;
 		
 		[_readViewACtrl prev];
