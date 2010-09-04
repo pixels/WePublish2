@@ -31,8 +31,9 @@
 	ReadViewCtrl *_readViewCtrl;
 	UIBarButtonItem *_bookBarButton;
 	UIBarButtonItem *_listBarButton;
-	UIBarButtonItem *_trashBarButton;
 	UIBarButtonItem *_buyBarButton;
+	UIBarButtonItem *_refreshBarButton;
+	UIBarButtonItem *_trashBarButton;
 	NSMutableDictionary *_tmpDlDic;
 	NSMutableDictionary *_bookmarkDic;
 	NSString *_bookmarkPath;
@@ -50,8 +51,9 @@
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activitiyView;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *bookBarButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *listBarButton;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *trashBarButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *refreshBarButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *buyBarButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *trashBarButton;
 
 - (void)initDirectory;
 - (void)initBooks;
@@ -66,7 +68,7 @@
 - (void)releaseBackground:(NSInteger)windowModeType;
 - (void)reloadBooks;
 - (void)releaseBooks:(BOOL)scrollHidden;
-- (void)setMenuBarItems:(BOOL)book list:(BOOL)list trash:(BOOL)trash buy:(BOOL)buy;
+- (void)setMenuBarItems:(BOOL)book list:(BOOL)list buy:(BOOL)buy refresh:(BOOL)refresh trash:(BOOL)trash;
 - (void)showDetail:(NSInteger)bookIndex;
 - (void)showBook:(NSUInteger)bookIndex selectPage:(NSUInteger)selectPage;
 - (void)releaseListView;
@@ -76,8 +78,9 @@
 
 - (IBAction)onMenuBookClick:(id)sender;
 - (IBAction)onMenuListClick:(id)sender;
-- (IBAction)onMenuTrashClick:(id)sender;
 - (IBAction)onMenuBuyClick:(id)sender;
+- (IBAction)onMenuRefreshClick:(id)sender;
+- (IBAction)onMenuTrashClick:(id)sender;
 
 @end
 

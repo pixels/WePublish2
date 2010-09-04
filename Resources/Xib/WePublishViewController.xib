@@ -83,6 +83,12 @@
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="373457411"/>
 							</object>
+							<object class="IBUIBarButtonItem" id="261263790">
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIStyle">1</int>
+								<reference key="IBUIToolbar" ref="373457411"/>
+								<int key="IBUISystemItemIdentifier">13</int>
+							</object>
 							<object class="IBUIBarButtonItem" id="877088409">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUIToolbar" ref="373457411"/>
@@ -219,6 +225,22 @@
 					</object>
 					<int key="connectionID">22</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">refreshBarButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="261263790"/>
+					</object>
+					<int key="connectionID">27</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">onMenuRefreshClick:</string>
+						<reference key="source" ref="261263790"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">28</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -274,6 +296,7 @@
 							<reference ref="574292641"/>
 							<reference ref="877088409"/>
 							<reference ref="813309679"/>
+							<reference ref="261263790"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -300,6 +323,14 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">9</int>
 						<reference key="object" ref="813309679"/>
+						<reference key="parent" ref="373457411"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">26</int>
+						<reference key="object" ref="261263790"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
 						<reference key="parent" ref="373457411"/>
 					</object>
 				</object>
@@ -353,7 +384,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">24</int>
+			<int key="maxID">28</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -368,10 +399,12 @@
 							<string>onMenuBookClick:</string>
 							<string>onMenuBuyClick:</string>
 							<string>onMenuListClick:</string>
+							<string>onMenuRefreshClick:</string>
 							<string>onMenuTrashClick:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -385,6 +418,7 @@
 							<string>onMenuBookClick:</string>
 							<string>onMenuBuyClick:</string>
 							<string>onMenuListClick:</string>
+							<string>onMenuRefreshClick:</string>
 							<string>onMenuTrashClick:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -402,6 +436,10 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">onMenuRefreshClick:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">onMenuTrashClick:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -415,12 +453,14 @@
 							<string>bookBarButton</string>
 							<string>buyBarButton</string>
 							<string>listBarButton</string>
+							<string>refreshBarButton</string>
 							<string>scrollView</string>
 							<string>trashBarButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UIActivityIndicatorView</string>
+							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
@@ -436,6 +476,7 @@
 							<string>bookBarButton</string>
 							<string>buyBarButton</string>
 							<string>listBarButton</string>
+							<string>refreshBarButton</string>
 							<string>scrollView</string>
 							<string>trashBarButton</string>
 						</object>
@@ -455,6 +496,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">listBarButton</string>
+								<string key="candidateClassName">UIBarButtonItem</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">refreshBarButton</string>
 								<string key="candidateClassName">UIBarButtonItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
