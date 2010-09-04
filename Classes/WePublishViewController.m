@@ -169,7 +169,8 @@
 	UIButton* btn;
 	BookInfo *info;
 	UIActivityIndicatorView *indicator;
-
+	NSInteger h_line;
+	float btnY, offY;
 	for (i = 0; i < book_count; i++) {
 		page = i / HxW;
 		if ([_buttons count] <= i) {
@@ -187,9 +188,13 @@
 				if (image) {
 					CGSize imageSize = CGSizeMake(CGImageGetWidth(image.CGImage), CGImageGetHeight(image.CGImage));
 					imageSize = [Util makeAspectFitCGSize:imageSize target:btn.frame.size];
+					h_line = (i % HxW) / W_COUNT_A;
+					btnY = 137 * h_line + 65;
+					offY = H_BOOK - imageSize.height;
 					[btn setBackgroundImage:image forState:UIControlStateNormal];
-					[btn setFrame:CGRectMake(btn.frame.origin.x, btn.frame.origin.y, imageSize.width, imageSize.height)];
+					[btn setFrame:CGRectMake(btn.frame.origin.x, btnY + (offY / 2), imageSize.width, imageSize.height)];
 					[image release];
+					NSLog(@"setImageToBooks %f", btn.frame.origin.y);
 					
 					UIActivityIndicatorView *indicator = (UIActivityIndicatorView *)[btn viewWithTag:BOOK_ACTIVITY_INDICATOR];
 					if (indicator) {
@@ -342,14 +347,17 @@
 	NSInteger HxW_A = H_COUNT_A * W_COUNT_A;
 	NSInteger HxW_B = H_COUNT_B * W_COUNT_B;
 	NSInteger i = 0;
+	float offY;
 	for (UIButton *btn in _buttons) {
 		CGRect frame = btn.frame;
 		if (_windowMode == MODE_A) {
 			page = i / HxW_A;
 			w_line = (i % HxW_A) % W_COUNT_A;
 			h_line = (i % HxW_A) / W_COUNT_A;
+			offY = H_BOOK - frame.size.height;
 			frame.origin.x = (W_MARGIN_A + W_BOOK) * w_line + W_MARGIN_A + page * WINDOW_AW;
-			frame.origin.y = 137 * h_line + 65;
+			frame.origin.y = 137 * h_line + 65 + (offY / 2);
+//			NSLog(@"setImageToBooks %f", btn.frame.origin.y);
 		}
 		else {
 			page = i / HxW_B;
