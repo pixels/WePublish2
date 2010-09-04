@@ -485,6 +485,8 @@
 	if (animation == YES) {
 		[UIView commitAnimations];
 	} else {
+		currentPage_ = 0;
+		[self setImageToBooks];
 		[self setBooks:NO];
 	}
 
