@@ -286,7 +286,7 @@
 	[path release];
 	
 	[self initDirectory];
-	[self showAlert:nil message:RELOAD_DATA_WARNING_MESSAGE btn1:@"NO" btn2:@"YES" tag:RELOAD_DATA_ALERT_TAG];
+	[self showAlert:nil message:RELOAD_DATA_WARNING_MESSAGE btn1:@"YES" btn2:nil tag:RELOAD_DATA_ALERT_TAG];
 }
 
 - (void)updateXML {
@@ -1003,7 +1003,8 @@
 	}
 	
 	else if ([alertView tag] == RELOAD_DATA_ALERT_TAG) {
-		if (buttonIndex == 1) {
+		if (buttonIndex == 0) {
+//		if (buttonIndex == 1) {
 			[self updateXML];
 		}
 	}
