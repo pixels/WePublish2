@@ -6,6 +6,7 @@
 //  Copyright 3di 2010. All rights reserved.
 //
 
+#import "WePublishAppDelegate.h"
 #import "WePublishViewController.h"
 #import "BookCollection.h"
 #import "BookInfo.h"
@@ -194,7 +195,6 @@
 					[btn setBackgroundImage:image forState:UIControlStateNormal];
 					[btn setFrame:CGRectMake(btn.frame.origin.x, btnY + (offY / 2), imageSize.width, imageSize.height)];
 					[image release];
-					NSLog(@"setImageToBooks %f", btn.frame.origin.y);
 					
 					UIActivityIndicatorView *indicator = (UIActivityIndicatorView *)[btn viewWithTag:BOOK_ACTIVITY_INDICATOR];
 					if (indicator) {
@@ -291,6 +291,7 @@
 
 - (void)updateXML {
 	_updating = YES;
+	[self networkActivityIndicator:NO];
 	[_activitiyView setHidden:NO];
 	[statusLabel_ setHidden:NO];
 	[statusLabel_ setText:STATUS_START_TO_UPDATE];
@@ -303,6 +304,7 @@
 	[self reloadBooks];
 	[self setMenuBarItems:NO list:YES buy:YES refresh:YES trash:YES];
 	
+	[self networkActivityIndicator:YES];
 	[_activitiyView setHidden:YES];
 	[statusLabel_ setHidden:YES];
 	_updating = NO;
@@ -633,6 +635,11 @@
 	}
 }
 
+- (void)networkActivityIndicator:(BOOL)hidden {
+	UIApplication *app = [UIApplication sharedApplication];
+	app.networkActivityIndicatorVisible = !hidden;
+}
+
 -(void)onAnimationEnd:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
 	if ([animationID isEqualToString:LOGO_ANIM_ID]) {
 		[_logoView.view removeFromSuperview];
@@ -724,6 +731,7 @@
 	}
 	
 	_bookCollection = [collection retain];
+	[self networkActivityIndicator:NO];
 	[_activitiyView setHidden:NO];
 	[statusLabel_ setHidden:NO];
 	
