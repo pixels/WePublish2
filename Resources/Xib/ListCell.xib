@@ -12,7 +12,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="3"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -52,6 +51,7 @@
 								<int key="NSvFlags">256</int>
 								<string key="NSFrame">{{8, 2}, {44, 56}}</string>
 								<reference key="NSSuperview" ref="875840375"/>
+								<reference key="NSWindow"/>
 								<int key="IBUIContentMode">1</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -59,8 +59,9 @@
 							<object class="IBUILabel" id="490987500">
 								<reference key="NSNextResponder" ref="875840375"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{60, 28}, {240, 21}}</string>
+								<string key="NSFrame">{{60, 28}, {235, 21}}</string>
 								<reference key="NSSuperview" ref="875840375"/>
+								<reference key="NSWindow"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -83,8 +84,9 @@
 							<object class="IBUILabel" id="139931336">
 								<reference key="NSNextResponder" ref="875840375"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{60, 11}, {240, 21}}</string>
+								<string key="NSFrame">{{60, 11}, {235, 21}}</string>
 								<reference key="NSSuperview" ref="875840375"/>
+								<reference key="NSWindow"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -104,6 +106,7 @@
 						</object>
 						<string key="NSFrameSize">{320, 60}</string>
 						<reference key="NSSuperview" ref="944538199"/>
+						<reference key="NSWindow"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
@@ -117,6 +120,7 @@
 				</object>
 				<string key="NSFrameSize">{320, 60}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
 					<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -218,7 +222,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>UIResponder</string>
 					<string>ListCellCtrl</string>
-					<string>{{1011, 639}, {320, 60}}</string>
+					<string>{{617, 639}, {320, 60}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -364,6 +368,20 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Foundation.framework/Headers/NSURLConnection.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">QuartzCore.framework/Headers/CAAnimation.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">QuartzCore.framework/Headers/CALayer.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
