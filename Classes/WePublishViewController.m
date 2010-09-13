@@ -573,7 +573,7 @@
 	BookInfo *info = [_bookCollection getAt:bookIndex];
 	ReadViewCtrl *ctrl = [[ReadViewCtrl alloc] initWithNibName:@"ReadView" bundle:nil];
 	_readViewCtrl = [ctrl retain];
-	[_readViewCtrl setup:info.uuid selectPage:selectPage pageNum:info.length fakePage:info.fake direction:info.direction];
+	[_readViewCtrl setup:info.uuid selectPage:selectPage pageNum:info.length fakePage:info.fake direction:info.direction windowMode:_windowMode];
 	[self.view insertSubview:_readViewCtrl.view belowSubview:_detailViewCtrl.view];
 	
 	[self initAnimation:DETAIL_TO_READ_ANIM_ID duration:0.5f];

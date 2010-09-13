@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class ReadViewACtrl;
-@class ReadViewBCtrl;
+//@class ReadViewBCtrl;
 
 @interface ReadViewCtrl : UIViewController {
 	UISlider *_slider;
@@ -20,7 +20,7 @@
 	NSInteger _fakePage;
 	NSUInteger _selectPage;
 	ReadViewACtrl *_readViewACtrl;
-	ReadViewBCtrl *_readViewBCtrl;
+	//ReadViewBCtrl *_readViewBCtrl;
 	UILabel *startLabel_;
 	UILabel *endLabel_;
 }

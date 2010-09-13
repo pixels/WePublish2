@@ -10,7 +10,7 @@
 #import "WindowModeType.h"
 #import "ReadViewBaseCtrl.h"
 #import "ReadViewACtrl.h"
-//#import "ReadViewBCtrl.h"
+#import "ReadViewBCtrl.h"
 #import "DirectionType.h"
 #import "Define.h"
 
@@ -27,7 +27,7 @@
 	
   _windowMode = MODE_NONE;
   [_slider addTarget:self action:@selector(onUpdateSlider:) forControlEvents:UIControlEventValueChanged];
-  [_slider addTarget:self action:@selector(onDragExitSlider:) forControlEvents:UIControlEventTouchUpInside];
+[_slider addTarget:self action:@selector(onDragExitSlider:) forControlEvents:UIControlEventTouchUpInside];
   _slider.minimumValue = 1;
   _slider.maximumValue = _pageNum - _fakePage;
   _slider.value = _pageNum;
@@ -91,12 +91,22 @@
 }
 
 - (void)cleanupCurrentView:(NSInteger)requireMode {
+	if (requireMode == MODE_A) {
 		if (_readViewACtrl)
 		{
 			[_readViewACtrl.view removeFromSuperview];
 			[_readViewACtrl release];
 			_readViewACtrl = nil;
 		}
+	}
+	else {
+		if (_readViewBCtrl)
+		{
+			[_readViewBCtrl.view removeFromSuperview];
+			[_readViewBCtrl release];
+			_readViewBCtrl = nil;
+		}
+	}
 }
 
 - (void)pageNext {
@@ -134,8 +144,12 @@
 
 //	if (_direction == DIRECTION_LEFT)
 //		number = _pageNum - number + 1;
-//
-      [_readViewACtrl requestPage:number];
+	
+	if (_windowMode == MODE_A) {
+		[_readViewACtrl requestPage:number];
+	} else {
+		[_readViewBCtrl requestPage:number];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

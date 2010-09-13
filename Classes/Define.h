@@ -10,12 +10,48 @@
 
 // Flag
 #define USE_WEBKIT false
+#define PAGING_BY_TAP true
 
 // Page size
 #define WINDOW_AW 320
 #define WINDOW_AH 460
 #define WINDOW_BW 1024
 #define WINDOW_BH 768
+
+// Page Margin
+#define PAGE_MARGIN_TOP 0
+#define PAGE_MARGIN_BOTTOM 0
+#define PAGE_MARGIN_LEFT 0
+#define PAGE_MARGIN_RIGHT 0
+
+#define SHADOW_RED 1.0f
+#define SHADOW_GREEN 1.0f
+#define SHADOW_BLUE 1.0f
+
+#define SHADOW_ALPHA 0.5f
+#define TOP_SHADOW_ALPHA 0.2f
+#define TOP_OVERLAY_ALPHA 0.6f
+
+#define FACE_PAGE_SHADOW_ALPHA 0.4f
+
+// Set speed of curling page
+#define CURL_BOOST 2.5f
+
+// Max scale
+#define MAX_ZOOM_SCALE 3.0f
+#define MIN_ZOOM_SCALE 1.0f
+
+#define REVERSE_PAGE_OPACITY 0.5f
+
+#define PAGING_WAIT_TIME 0.003f
+
+#define CURL_SPAN 0.01f
+
+#define PAGE_CHANGE_TRIGGER_MARGIN 20.0f
+
+#define CENTER_SHADOW_WIDTH 32
+#define TOP_SHADOW_WIDTH 30
+#define BOTTOM_SHADOW_WIDTH 100
 
 // URL
 #define TOP_URL @"http://wepublish.jp/"

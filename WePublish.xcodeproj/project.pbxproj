@@ -49,6 +49,8 @@
 		70DE5F1811DCF2C800E2A18B /* dummy.png in Resources */ = {isa = PBXBuildFile; fileRef = 70DE5F1711DCF2C800E2A18B /* dummy.png */; };
 		70DE5F4511E02B8100620D72 /* BookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DE5F4411E02B8100620D72 /* BookInfo.m */; };
 		70DE5F4811E02D1D00620D72 /* BookCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DE5F4711E02D1D00620D72 /* BookCollection.m */; };
+		D1BF68AA123E3506006E4EF8 /* MyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BF68A9123E3506006E4EF8 /* MyScrollView.m */; };
+		D1BF68AE123E3530006E4EF8 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BF68AD123E3530006E4EF8 /* Utilities.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +127,11 @@
 		70DE5F4611E02D1D00620D72 /* BookCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookCollection.h; sourceTree = "<group>"; };
 		70DE5F4711E02D1D00620D72 /* BookCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookCollection.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* WePublish-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WePublish-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		D1BF68A9123E3506006E4EF8 /* MyScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScrollView.m; sourceTree = "<group>"; };
+		D1BF68AB123E3510006E4EF8 /* MyScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScrollView.h; sourceTree = "<group>"; };
+		D1BF68AC123E3525006E4EF8 /* TouchesDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchesDelegate.h; sourceTree = "<group>"; };
+		D1BF68AD123E3530006E4EF8 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		D1BF68B1123E3547006E4EF8 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +153,11 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D1BF68B1123E3547006E4EF8 /* Utilities.h */,
+				D1BF68AD123E3530006E4EF8 /* Utilities.m */,
+				D1BF68AC123E3525006E4EF8 /* TouchesDelegate.h */,
+				D1BF68AB123E3510006E4EF8 /* MyScrollView.h */,
+				D1BF68A9123E3506006E4EF8 /* MyScrollView.m */,
 				0AFF6D7612239C160028F8C7 /* View */,
 				702E088111F27DEA005C5C48 /* Helper */,
 				702E088011F27DD3005C5C48 /* Main */,
@@ -447,6 +459,8 @@
 				702E087D11F27DA2005C5C48 /* zip.c in Sources */,
 				702E087E11F27DA2005C5C48 /* ZipArchive.mm in Sources */,
 				702E0B4E11F33EBE005C5C48 /* LoginViewCtrl.m in Sources */,
+				D1BF68AA123E3506006E4EF8 /* MyScrollView.m in Sources */,
+				D1BF68AE123E3530006E4EF8 /* Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,7 +13,6 @@
 	NSMutableDictionary *_pageList;
 	NSMutableDictionary *_viewList;
 	NSMutableDictionary *_imageList;
-	NSMutableDictionary *_booksList;
 	NSString *_uuid;
 	NSInteger _direction;
 	NSInteger _currentPage;
