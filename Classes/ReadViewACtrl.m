@@ -866,11 +866,16 @@
 }
 
 - (void)resetContentsSize {
-  _scrollView.contentOffset = CGPointMake(0, 0);
-  _scrollView.zoomScale = 1.0f;
+  //_scrollView.contentOffset = CGPointMake(0, 0);
+  //_scrollView.zoomScale = 1.0f;
   if ( _windowMode == MODE_A ) {
-    _scrollView.frame = CGRectMake(0, 0, WINDOW_AW, WINDOW_AH);
-    _scrollView.contentSize = CGSizeMake(WINDOW_AW, WINDOW_AH);
+	if( _direction == DIRECTION_LEFT ) {
+		  _scrollView.contentOffset = CGPointMake(_scrollView.contentSize.width - image_width, 0);
+	} else {
+		  _scrollView.contentOffset = CGPointMake(0, 0);
+	}
+  //  _scrollView.frame = CGRectMake(0, 0, WINDOW_AW, WINDOW_AH);
+  //  _scrollView.contentSize = CGSizeMake(WINDOW_AW, WINDOW_AH);
   } else {
     _scrollView.frame = CGRectMake(0, 0, WINDOW_BW, WINDOW_BH);
     _scrollView.contentSize = CGSizeMake(WINDOW_BW, WINDOW_BH);
@@ -967,6 +972,8 @@
     _scrollView.frame = CGRectMake(0, 0, WINDOW_BW, WINDOW_BH);
     _scrollView.contentSize = CGSizeMake(WINDOW_BW * scale, WINDOW_BH * scale);
   }
+_mode = page_mode_none;
+[self setPages];
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)sv willDecelerate:(BOOL)decelerate {
@@ -977,6 +984,7 @@
     w = WINDOW_BW;
   }
   //NSLog(@"%f, %f", sv.contentOffset.x + w , sv.contentSize.width + PAGE_CHANGE_TRIGGER_MARGIN);
+/*
   if (sv.contentOffset.x < -1.0f * PAGE_CHANGE_TRIGGER_MARGIN) {
     if (_direction == DIRECTION_LEFT) {
       [self notifyGoToNextPage];
@@ -990,6 +998,8 @@
       [self notifyGoToNextPage];
     }
   }
+ [self setPages];
+*/
   //NSLog(@"release %f, %f", sv.contentOffset.x, sv.contentOffset.y);
 }
 
@@ -1031,8 +1041,8 @@
    //[super loadPages:selectPage windowMode:_windowMode];
 
    NSInteger selectPageWithOffset;
-   for (NSInteger i = 0; i < 7; i++) {
-     selectPageWithOffset = selectPage + (i - 3);
+   for (NSInteger i = 0; i < 5; i++) {
+     selectPageWithOffset = selectPage + (i - 2);
 
      NSNumber *number = [NSNumber numberWithInteger:selectPageWithOffset];
      if ([_imageList objectForKey:number]) {
@@ -1057,6 +1067,7 @@
 - (void)setPages {
   [CATransaction begin];
   [CATransaction setDisableActions:YES]; 
+NSLog(@"set pages");
 
   leftPageImageLayer.opacity = 1.0f;
   leftPageImageLayer.transform = CATransform3DMakeScale(1, 1, 1); //TODO
@@ -1162,6 +1173,10 @@
 
     [_scrollView setScrollEnabled:NO];
     [_scrollView setCanCancelContentTouches:NO];
+	} else {
+    if ( _mode == page_mode_none ) {
+      _mode = page_mode_tap_on_zoom;
+    }
   }
 }
 
@@ -1316,7 +1331,7 @@
      }
      NSLog("%d", [fingers count]);
      */
-  if ( _mode == page_mode_curl_start ) {
+  if ( _mode == page_mode_curl_start || _mode == page_mode_tap_on_zoom ) {
     if ( PAGING_BY_TAP ) {
       if ( point.x < self.view.frame.size.width / 2 ) {
 	if ( _direction == DIRECTION_LEFT ) {

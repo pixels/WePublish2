@@ -20,6 +20,7 @@ enum {
   page_mode_release,
   page_mode_curl_right,
   page_mode_curl_left,
+  page_mode_tap_on_zoom,
   page_mode_zoom,
   page_mode_wait
 };

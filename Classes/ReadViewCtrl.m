@@ -2,7 +2,7 @@
 //  ReadViewCtrl.m
 //  WePublish
 //
-//  Created by Yusuke Kikkawa on 10/06/27.
+//  Created by Yusuke Kikkawa
 //  Copyright 2010 3di. All rights reserved.
 //
 
@@ -26,8 +26,7 @@
   [super viewDidLoad];
 	
   _windowMode = MODE_NONE;
-  [_slider addTarget:self action:@selector(onUpdateSlider:) forControlEvents:UIControlEventValueChanged];
-  [_slider addTarget:self action:@selector(onDragExitSlider:) forControlEvents:UIControlEventTouchUpInside];
+  [_slider addTarget:self action:@selector(onUpdateSlider:) forControlEvents:UIControlEventTouchUpInside];
   _slider.minimumValue = 1;
   _slider.maximumValue = _pageNum - _fakePage;
   _slider.value = _pageNum;
