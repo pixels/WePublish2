@@ -32,7 +32,8 @@
 
   _bookView = [[UIView alloc] init];
   [_bookView setUserInteractionEnabled:NO];
-  // [_scrollView setBackgroundColor:[UIColor blueColor]];
+  [_bookView setBackgroundColor:[UIColor redColor]];
+  [_scrollView setBackgroundColor:[UIColor blueColor]];
   [_scrollView addSubview:_bookView];
 
   bottomLayer = [[CALayer alloc] init];
@@ -131,6 +132,16 @@
   image_margin_y = 0;
 
   fingers = [[NSMutableArray alloc] init];
+
+  if ( PAGING_BY_BUTTON ) {
+    _nextButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+    _prevButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+
+    [_nextButton addTarget:self action:@selector(onNextButtonPushed:) forControlEvents:UIControlEventTouchUpInside];
+    [_prevButton addTarget:self action:@selector(onPrevButtonPushed:) forControlEvents:UIControlEventTouchUpInside];
+    [_nextButton setUserInteractionEnabled:YES];
+    [_prevButton setUserInteractionEnabled:YES];
+  }
 }
 
 - (void)initLayout {
@@ -141,9 +152,23 @@
     if ( _direction == DIRECTION_LEFT ) {
       leftPageLayer.opacity = 1.0f;
       rightPageLayer.opacity = 0.0f;
+
+      if ( PAGING_BY_BUTTON ) {
+	[_nextButton setTitle:@"<<" forState:UIControlStateNormal];
+	[_prevButton setTitle:@">>" forState:UIControlStateNormal];
+	_nextButton.frame = CGRectMake(PAGING_BUTTON_MARGIN, WINDOW_AH - (PAGING_BUTTON_HEIGHT + PAGING_BUTTON_MARGIN), PAGING_BUTTON_WIDTH, PAGING_BUTTON_HEIGHT);
+	_prevButton.frame = CGRectMake(WINDOW_AW - (PAGING_BUTTON_WIDTH + PAGING_BUTTON_MARGIN), WINDOW_AH - (PAGING_BUTTON_HEIGHT + PAGING_BUTTON_MARGIN), PAGING_BUTTON_WIDTH, PAGING_BUTTON_HEIGHT);
+      }
     } else {
       leftPageLayer.opacity = 0.0f;
       rightPageLayer.opacity = 1.0f;
+
+      if ( PAGING_BY_BUTTON ) {
+	[_nextButton setTitle:@">>" forState:UIControlStateNormal];
+	[_prevButton setTitle:@"<<" forState:UIControlStateNormal];
+	_prevButton.frame = CGRectMake(PAGING_BUTTON_MARGIN, WINDOW_AH - (PAGING_BUTTON_HEIGHT + PAGING_BUTTON_MARGIN), PAGING_BUTTON_WIDTH, PAGING_BUTTON_HEIGHT);
+	_nextButton.frame = CGRectMake(WINDOW_AW - (PAGING_BUTTON_WIDTH + PAGING_BUTTON_MARGIN), WINDOW_AH - (PAGING_BUTTON_HEIGHT + PAGING_BUTTON_MARGIN), PAGING_BUTTON_WIDTH, PAGING_BUTTON_HEIGHT);
+      }
     }
 
     image_width = WINDOW_AW - PAGE_MARGIN_LEFT - PAGE_MARGIN_RIGHT;
@@ -182,6 +207,22 @@
     topLayer.frame = CGRectMake(0, 0, 2 * image_width, image_height);
     rightPageLayer.frame = CGRectMake(image_width + 1, 0, image_width, image_height);
     leftPageLayer.frame = CGRectMake(0, 0, image_width, image_height);
+
+    if (_direction == DIRECTION_LEFT ) {
+      if ( PAGING_BY_BUTTON ) {
+	[_nextButton setTitle:@"<<" forState:UIControlStateNormal];
+	[_prevButton setTitle:@">>" forState:UIControlStateNormal];
+	_nextButton.frame = CGRectMake(PAGING_BUTTON_MARGIN, WINDOW_BH - (PAGING_BUTTON_HEIGHT + PAGING_BUTTON_MARGIN), PAGING_BUTTON_WIDTH, PAGING_BUTTON_HEIGHT);
+	_prevButton.frame = CGRectMake(WINDOW_BW - (PAGING_BUTTON_WIDTH + PAGING_BUTTON_MARGIN), WINDOW_BH - (PAGING_BUTTON_HEIGHT + PAGING_BUTTON_MARGIN), PAGING_BUTTON_WIDTH, PAGING_BUTTON_HEIGHT);
+      }
+    } else {
+      if ( PAGING_BY_BUTTON ) {
+	[_nextButton setTitle:@">>" forState:UIControlStateNormal];
+	[_prevButton setTitle:@"<<" forState:UIControlStateNormal];
+	_prevButton.frame = CGRectMake(PAGING_BUTTON_MARGIN, WINDOW_BH - (PAGING_BUTTON_HEIGHT + PAGING_BUTTON_MARGIN), PAGING_BUTTON_WIDTH, PAGING_BUTTON_HEIGHT);
+	_nextButton.frame = CGRectMake(WINDOW_BW - (PAGING_BUTTON_WIDTH + PAGING_BUTTON_MARGIN), WINDOW_BH - PAGING_BUTTON_HEIGHT, PAGING_BUTTON_WIDTH, PAGING_BUTTON_HEIGHT);
+      }
+    }
   }
   //(id)[[[UIColor alloc] initWithRed:SHADOW_RED green:SHADOW_GREEN blue:SHADOW_BLUE alpha:SHADOW_ALPHA] CGColor], 
   centerPageRightShadow.colors = [NSArray arrayWithObjects:
@@ -813,6 +854,11 @@
   return NO;
 }
 
+- (void)onNextButtonPushed:(UIButton *)sender {
+  [self next];
+  [self setPages];
+}
+
 - (void)next {
   [super next];
 
@@ -844,6 +890,11 @@
   return NO;
 }
 
+- (void)onPrevButtonPushed:(UIButton *)sender {
+  [self prev];
+  [self setPages];
+}
+
 - (void)prev {
   [super prev];
 
@@ -870,7 +921,7 @@
   //_scrollView.zoomScale = 1.0f;
   if ( _windowMode == MODE_A ) {
 	if( _direction == DIRECTION_LEFT ) {
-		  _scrollView.contentOffset = CGPointMake(_scrollView.contentSize.width - image_width, 0);
+		  _scrollView.contentOffset = CGPointMake(image_width * (1.0f - (1.0f / _scrollView.zoomScale)), 0);
 	} else {
 		  _scrollView.contentOffset = CGPointMake(0, 0);
 	}
@@ -955,25 +1006,47 @@
     }
   }
 
+  /*
   [self loadPages:_currentPage windowMode:_windowMode];
 
   [self initLayout];
+  */
 
   [self setPages];
 
+  /*
   [self releaseFarBooks:_currentPage];
+  */
 }
 
 -(void)scrollViewDidEndZooming:(UIScrollView *)sv withView:(UIView*)v0 atScale:(float)scale {
+  _scrollView.zoomScale = scale;
   if (_windowMode == MODE_A) {
+    //_scrollView.frame = CGRectMake(0, 0, WINDOW_AW, WINDOW_AH);
     _scrollView.frame = CGRectMake(0, 0, WINDOW_AW, WINDOW_AH);
-    _scrollView.contentSize = CGSizeMake(WINDOW_AW * scale, WINDOW_AH * scale);
+    //_scrollView.contentSize = CGSizeMake(WINDOW_AW, WINDOW_AH);
+    _scrollView.contentSize = CGSizeMake(WINDOW_AW, WINDOW_AH);
+    //_scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height);
   } else {
+    // _scrollView.frame = CGRectMake(0, 0, WINDOW_BW, WINDOW_BH);
+    //_scrollView.contentSize = CGSizeMake(WINDOW_BW * scale, WINDOW_BH * scale);
     _scrollView.frame = CGRectMake(0, 0, WINDOW_BW, WINDOW_BH);
-    _scrollView.contentSize = CGSizeMake(WINDOW_BW * scale, WINDOW_BH * scale);
+    _scrollView.contentSize = CGSizeMake(WINDOW_BW, WINDOW_BH);
   }
-_mode = page_mode_none;
-[self setPages];
+  _mode = page_mode_none;
+  [self setPages];
+
+  if ( PAGING_BY_BUTTON && scale > 1.0f) {
+    if(!_nextButton.superview){
+      [self.view addSubview:_nextButton];
+    }
+    if(!_prevButton.superview){
+      [self.view addSubview:_prevButton];
+    }
+  } else {
+    [_nextButton removeFromSuperview];
+    [_prevButton removeFromSuperview];
+  }
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)sv willDecelerate:(BOOL)decelerate {
@@ -1004,7 +1077,7 @@ _mode = page_mode_none;
 }
 
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-  return scrollView;
+  return _scrollView;
 }
 
 - (void)releaseFarBooks:(NSInteger)targetPage {
@@ -1067,7 +1140,6 @@ _mode = page_mode_none;
 - (void)setPages {
   [CATransaction begin];
   [CATransaction setDisableActions:YES]; 
-NSLog(@"set pages");
 
   leftPageImageLayer.opacity = 1.0f;
   leftPageImageLayer.transform = CATransform3DMakeScale(1, 1, 1); //TODO
@@ -1173,9 +1245,11 @@ NSLog(@"set pages");
 
     [_scrollView setScrollEnabled:NO];
     [_scrollView setCanCancelContentTouches:NO];
-	} else {
+  } else {
     if ( _mode == page_mode_none ) {
       _mode = page_mode_tap_on_zoom;
+      [self endFor:_curl_side from:_curl_from to:_curl_to];
+      [self setPages];
     }
   }
 }
@@ -1332,7 +1406,7 @@ NSLog(@"set pages");
      NSLog("%d", [fingers count]);
      */
   if ( _mode == page_mode_curl_start || _mode == page_mode_tap_on_zoom ) {
-    if ( PAGING_BY_TAP ) {
+    if ( PAGING_BY_TAP && (!PAGING_BY_BUTTON || (_scrollView.zoomScale == 1.0f))) {
       if ( point.x < self.view.frame.size.width / 2 ) {
 	if ( _direction == DIRECTION_LEFT ) {
 	  [self notifyGoToNextPage];
@@ -1399,6 +1473,7 @@ NSLog(@"set pages");
     _mode = page_mode_none;
   }
 
+  [_scrollView setMaximumZoomScale:MAX_ZOOM_SCALE];
   if ( MAX_ZOOM_SCALE != MIN_ZOOM_SCALE ) [_scrollView setScrollEnabled:YES];
   [_scrollView setCanCancelContentTouches:YES];
 }
@@ -1412,6 +1487,7 @@ NSLog(@"set pages");
      }
      NSLog("%d", [fingers count]);
      */
+  [_scrollView setMaximumZoomScale:MAX_ZOOM_SCALE];
   if ( MAX_ZOOM_SCALE != MIN_ZOOM_SCALE ) [_scrollView setScrollEnabled:YES];
   [_scrollView setCanCancelContentTouches:YES];
 }

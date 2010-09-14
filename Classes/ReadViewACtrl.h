@@ -53,6 +53,9 @@ enum {
 	NSInteger _curl_to;
 	float _curl_ratio;
 
+	UIButton * _nextButton;
+	UIButton * _prevButton;
+
 	NSMutableArray * fingers;
 
 	CGPoint touchStartPoint;

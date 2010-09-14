@@ -24,6 +24,14 @@
 #define PAGE_MARGIN_LEFT 0
 #define PAGE_MARGIN_RIGHT 0
 
+// Flag of Paging way on zooming
+#define PAGING_BY_BUTTON true
+
+// Button Size
+#define PAGING_BUTTON_WIDTH 40
+#define PAGING_BUTTON_HEIGHT 40
+#define PAGING_BUTTON_MARGIN 5
+
 #define SHADOW_RED 1.0f
 #define SHADOW_GREEN 1.0f
 #define SHADOW_BLUE 1.0f
