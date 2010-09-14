@@ -32,8 +32,8 @@
 
   _bookView = [[UIView alloc] init];
   [_bookView setUserInteractionEnabled:NO];
-  [_bookView setBackgroundColor:[UIColor redColor]];
-  [_scrollView setBackgroundColor:[UIColor blueColor]];
+  // [_bookView setBackgroundColor:[UIColor redColor]];
+  // [_scrollView setBackgroundColor:[UIColor blueColor]];
   [_scrollView addSubview:_bookView];
 
   bottomLayer = [[CALayer alloc] init];
@@ -801,7 +801,7 @@
 
   [CATransaction commit];
 
-  _mode = page_mode_none;
+  //_mode = page_mode_none;
 }
 
 - (NSInteger) getRightPageNumberWithDistance:(NSInteger)d {
@@ -921,9 +921,9 @@
   //_scrollView.zoomScale = 1.0f;
   if ( _windowMode == MODE_A ) {
 	if( _direction == DIRECTION_LEFT ) {
-		  _scrollView.contentOffset = CGPointMake(image_width * (1.0f - (1.0f / _scrollView.zoomScale)), 0);
+		  _scrollView.contentOffset = CGPointMake(image_width * (1.0f - (1.0f / _scrollView.zoomScale)) - image_margin_x, image_margin_y);
 	} else {
-		  _scrollView.contentOffset = CGPointMake(0, 0);
+		  _scrollView.contentOffset = CGPointMake(image_margin_x, image_margin_y);
 	}
   //  _scrollView.frame = CGRectMake(0, 0, WINDOW_AW, WINDOW_AH);
   //  _scrollView.contentSize = CGSizeMake(WINDOW_AW, WINDOW_AH);
@@ -1089,7 +1089,7 @@
 	       [super releaseBook:number removeFromList:YES];
       }
       if ([_imageList objectForKey:number]) {
-	NSLog(@"release image %d", i);
+	// NSLog(@"release image %d", i);
 	[super releaseImage:number removeFromList:YES];
       }
     }
@@ -1406,7 +1406,7 @@
      NSLog("%d", [fingers count]);
      */
   if ( _mode == page_mode_curl_start || _mode == page_mode_tap_on_zoom ) {
-    if ( PAGING_BY_TAP && (!PAGING_BY_BUTTON || (_scrollView.zoomScale == 1.0f))) {
+    if ( PAGING_BY_TAP && ((!PAGING_BY_BUTTON) || (_scrollView.zoomScale == 1.0f))) {
       if ( point.x < self.view.frame.size.width / 2 ) {
 	if ( _direction == DIRECTION_LEFT ) {
 	  [self notifyGoToNextPage];

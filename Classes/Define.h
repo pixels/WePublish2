@@ -11,6 +11,7 @@
 // Flag
 #define USE_WEBKIT false
 #define PAGING_BY_TAP true
+#define PAGING_BY_BUTTON true
 
 // Page size
 #define WINDOW_AW 320
@@ -23,9 +24,6 @@
 #define PAGE_MARGIN_BOTTOM 0
 #define PAGE_MARGIN_LEFT 0
 #define PAGE_MARGIN_RIGHT 0
-
-// Flag of Paging way on zooming
-#define PAGING_BY_BUTTON true
 
 // Button Size
 #define PAGING_BUTTON_WIDTH 40
