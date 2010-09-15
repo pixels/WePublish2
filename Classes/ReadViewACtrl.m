@@ -965,6 +965,10 @@
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)sender {
+  if ( PAGING_BY_BUTTON ){
+    _nextButton.enabled = false;
+    _prevButton.enabled = false;
+  }
 }
 
 -(void)scrollViewWillBeginDecelerating:(UIScrollView *)sender {
@@ -991,7 +995,10 @@
    */
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-
+  if ( PAGING_BY_BUTTON ){
+    _nextButton.enabled = true;
+    _prevButton.enabled = true;
+  }
   if (_scrollOffsetX > scrollView.contentOffset.x) {
     if (_direction == DIRECTION_LEFT) {
       //			NSLog(@"scrollViewDidEndScrollingAnimation Next");
