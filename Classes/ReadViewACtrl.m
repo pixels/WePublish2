@@ -137,8 +137,11 @@
     _nextButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
     _prevButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
 
-    [_nextButton addTarget:self action:@selector(onNextButtonPushed:) forControlEvents:UIControlEventTouchUpInside];
-    [_prevButton addTarget:self action:@selector(onPrevButtonPushed:) forControlEvents:UIControlEventTouchUpInside];
+    _nextButton.enabled = false;
+    _prevButton.enabled = false;
+
+    // [_nextButton addTarget:self action:@selector(onNextButtonPushed:) forControlEvents:UIControlEventTouchUpInside];
+    // [_prevButton addTarget:self action:@selector(onPrevButtonPushed:) forControlEvents:UIControlEventTouchUpInside];
     [_nextButton setUserInteractionEnabled:YES];
     [_prevButton setUserInteractionEnabled:YES];
   }
@@ -965,10 +968,6 @@
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)sender {
-  if ( PAGING_BY_BUTTON ){
-    _nextButton.enabled = false;
-    _prevButton.enabled = false;
-  }
 }
 
 -(void)scrollViewWillBeginDecelerating:(UIScrollView *)sender {
@@ -995,10 +994,6 @@
    */
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  if ( PAGING_BY_BUTTON ){
-    _nextButton.enabled = true;
-    _prevButton.enabled = true;
-  }
   if (_scrollOffsetX > scrollView.contentOffset.x) {
     if (_direction == DIRECTION_LEFT) {
       //			NSLog(@"scrollViewDidEndScrollingAnimation Next");
@@ -1427,8 +1422,26 @@
 	  [self notifyGoToNextPage];
 	}
       }
-    [self setPages];
+    } else if( PAGING_BY_BUTTON ) {
+      if ((PAGING_BUTTON_MARGIN < point.x) && (point.x < PAGING_BUTTON_MARGIN + PAGING_BUTTON_WIDTH ) && (point.y < WINDOW_AH - PAGING_BUTTON_MARGIN) && (point.y > WINDOW_AH - (PAGING_BUTTON_MARGIN + PAGING_BUTTON_HEIGHT))) {
+	if ((_direction == DIRECTION_LEFT) && ([self isNext])) {
+	  [self next];
+	  [self setPages];
+	} else if([self isPrev]){
+	  [self prev];
+	  [self setPages];
+	}
+      } else if ((WINDOW_AW - PAGING_BUTTON_MARGIN > point.x) && (point.x > WINDOW_AW - (PAGING_BUTTON_MARGIN + PAGING_BUTTON_WIDTH )) && (point.y < WINDOW_AH - PAGING_BUTTON_MARGIN) && (point.y > WINDOW_AH - (PAGING_BUTTON_MARGIN + PAGING_BUTTON_HEIGHT))) {
+	if ((_direction != DIRECTION_LEFT) && ([self isNext])) {
+	  [self next];
+	  [self setPages];
+	} else if([self isPrev]) {
+	  [self prev];
+	  [self setPages];
+	}
+      }
     }
+    [self setPages];
     _mode = page_mode_none;
   } else if ( _mode == page_mode_curling ) {
     if ( _windowMode == MODE_A ) {
