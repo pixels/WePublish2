@@ -330,8 +330,8 @@
 	  middlePageImageLayer.contents = [_imageList objectForKey:[NSNumber numberWithInteger:[self getRightPageNumberWithDistance:0]]];
 	  topPageImageLayer.contents = [_imageList objectForKey:[NSNumber numberWithInteger:[self getRightPageNumberWithDistance:0]]];
 	}
-	middlePageLayer.frame = CGRectMake(center, 0, image_width , image_height);
-	topPageLayer.frame = CGRectMake(center, 0, 0, image_height);
+	middlePageLayer.frame = CGRectMake(center + 1, 0, image_width , image_height);
+	topPageLayer.frame = CGRectMake(center + 1, 0, 0, image_height);
 
 	//middlePageRightShadowLayer.opacity = 1;
 	middlePageRightShadowLayer.frame = CGRectMake(0, image_margin_y, CENTER_SHADOW_WIDTH, image_height - (2 * image_margin_y));
@@ -923,11 +923,19 @@
   //_scrollView.contentOffset = CGPointMake(0, 0);
   //_scrollView.zoomScale = 1.0f;
   if ( _windowMode == MODE_A ) {
+    if( TOP_ALIGN_ON_ZOOM && (_scrollView.zoomScale == 1.0f) ) {
 	if( _direction == DIRECTION_LEFT ) {
 		  _scrollView.contentOffset = CGPointMake(image_width * (1.0f - (1.0f / _scrollView.zoomScale)) - image_margin_x, image_margin_y);
 	} else {
 		  _scrollView.contentOffset = CGPointMake(image_margin_x, image_margin_y);
 	}
+    } else {
+	if( _direction == DIRECTION_LEFT ) {
+		  _scrollView.contentOffset = CGPointMake(image_width * (1.0f - (1.0f / _scrollView.zoomScale)), 0);
+	} else {
+		  _scrollView.contentOffset = CGPointMake(0, 0);
+	}
+    }
   //  _scrollView.frame = CGRectMake(0, 0, WINDOW_AW, WINDOW_AH);
   //  _scrollView.contentSize = CGSizeMake(WINDOW_AW, WINDOW_AH);
   } else {
