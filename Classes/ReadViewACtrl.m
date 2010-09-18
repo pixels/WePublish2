@@ -923,7 +923,7 @@
   //_scrollView.contentOffset = CGPointMake(0, 0);
   //_scrollView.zoomScale = 1.0f;
   if ( _windowMode == MODE_A ) {
-    if( TOP_ALIGN_ON_ZOOM && (_scrollView.zoomScale == 1.0f) ) {
+    if( TOP_ALIGN_ON_ZOOM && (_scrollView.zoomScale > 1.0f) ) {
 	if( _direction == DIRECTION_LEFT ) {
 		  _scrollView.contentOffset = CGPointMake(image_width * (1.0f - (1.0f / _scrollView.zoomScale)) - image_margin_x, image_margin_y);
 	} else {

@@ -12,7 +12,7 @@
 #define USE_WEBKIT false
 #define PAGING_BY_TAP true
 #define PAGING_BY_BUTTON true
-#define TOP_ALIGN_ON_ZOOM false
+#define TOP_ALIGN_ON_ZOOM true
 
 // Page size
 #define WINDOW_AW 320
