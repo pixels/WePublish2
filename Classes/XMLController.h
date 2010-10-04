@@ -23,9 +23,10 @@
 	BookCollection *_savedBookCollection;
 	BookCollection *_bookCollection;
 	BOOL _savedXMLLoad;
+	BOOL checlToServer_;
 }
 
-- (void)update:(NSString*)url;
+- (void)update:(NSString*)url checlToServer:(BOOL)checlToServer;
 - (void)updateContinue;
 - (void)saveXML;
 - (void)alertIfDontExistData:(NSString *)message;
