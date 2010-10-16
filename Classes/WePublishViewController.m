@@ -300,14 +300,14 @@
 	[self showAlert:nil message:RELOAD_DATA_WARNING_MESSAGE btn1:@"OK" btn2:nil tag:RELOAD_DATA_ALERT_TAG];
 }
 
-- (void)updateXML:(BOOL)checlToServer{
+- (void)updateXML:(BOOL)checkToServer force:(BOOL)force {
 	_updating = YES;
 	[self networkActivityIndicator:NO];
 	[_activitiyView setHidden:NO];
 	[statusLabel_ setHidden:NO];
 	[statusLabel_ setText:STATUS_START_TO_UPDATE];
 
-	[_xmlCtrl update:UPDATE_URL checlToServer:checlToServer];
+	[_xmlCtrl update:UPDATE_URL checkToServer:checkToServer force:force];
 }
 
 // XMLの更新終了
@@ -663,7 +663,7 @@
 		[_logoView.view removeFromSuperview];
 		[_logoView release];
 		
-		[self updateXML:NO];
+		[self updateXML:NO force:YES];
 	}
 	
 	else if ([animationID isEqualToString:CHANGE_ORIENTATION_ANIM_ID]) {
@@ -1011,7 +1011,7 @@
 - (IBAction)onMenuRefreshClick:(id)sender {
 	[self setMenuBarItems:NO list:NO buy:NO refresh:NO trash:NO];
 	[self releaseBooks:NO];
-	[self updateXML:YES];
+	[self updateXML:YES force:NO];
 }
 
 // 削除ボタンが選択されたとき
@@ -1033,7 +1033,7 @@
 	else if ([alertView tag] == RELOAD_DATA_ALERT_TAG) {
 		if (buttonIndex == 0) {
 //		if (buttonIndex == 1) {
-			[self updateXML:YES];
+			[self updateXML:YES force:YES];
 		}
 	}
 	
