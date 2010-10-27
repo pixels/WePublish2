@@ -35,7 +35,7 @@
 }
 
 - (void)update:(NSString*)url checkToServer:(BOOL)checkToServer force:(BOOL)force {
-	
+	_savedData = [[NSData alloc] initWithContentsOfFile:_outputFilePath];
 	checkToServer_ = checkToServer | force;
 	force_ = force;
 	[_data setLength:0];
@@ -164,7 +164,7 @@
 		savedInfo = [_savedBookCollection getByKey:info.uuid];
 		
 		if (!info || !savedInfo) {
-			NSLog(@"[INFO] XMLController.m checkVersion: this is the new item!!");
+			//NSLog(@"[INFO] XMLController.m checkVersion: this is the new item!!");
 			info.oldVersion = YES;
 			continue;
 		}
@@ -416,7 +416,9 @@
 //			  _currentBookInfo.review
 //			  );
 		
+		//NSLog(@"uuid: %@, title: %@", _currentBookInfo.uuid, _currentBookInfo.title);
 		if (_savedXMLLoad) {
+		//NSLog(@"saved uuid: %@, title: %@", _currentBookInfo.uuid, _currentBookInfo.title);
 			[_savedBookCollection addByInfo:_currentBookInfo];
 		}
 		else {
