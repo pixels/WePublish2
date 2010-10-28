@@ -59,6 +59,8 @@
 	_buttons = [[NSMutableArray alloc] init];
 	_windowMode = MODE_NONE;
 	_xmlCtrl = [[XMLController alloc] init];
+
+	_showingDetail = false;
 	
 	loginUsername_ = @"";
 	loginPassword_ = @"";
@@ -581,6 +583,8 @@
 
 // 本の表示
 - (void)showBook:(NSUInteger)bookIndex selectPage:(NSUInteger)selectPage {
+  _showingDetail = false;
+
 	BookInfo *info = [_bookCollection getAt:bookIndex];
 
 	// Create length info of the selected book.
@@ -875,9 +879,11 @@
 
 // 本が選択されて詳細画面が表示
 - (void)onBookClick:(UIButton*)sender {
-	
+  if (!_showingDetail) { // 詳細画面の複数表示を防ぐ
+    _showingDetail = true;
 	_selectBookIndex = [sender tag];
 	[self showDetail:_selectBookIndex];
+  }
 }
 
 // Logoアニメーション終了
@@ -889,6 +895,7 @@
 
 // 詳細画面を消すアニメーション
 - (void)onDetailDisappearSelect:(NSNotification *)notification {
+  _showingDetail = false;
 
 	[self initAnimation:DETAIL_TO_SELECT_ANIM_ID duration:0.5f];
 	[_detailViewCtrl.view setAlpha:0];
@@ -923,7 +930,14 @@
 
 // 詳細画面から読む画面
 - (void)onDetailToReadSelect:(NSNotification *)notification {
+	BookInfo *info = [_bookCollection getAt:_selectBookIndex];
+
+	NSString *bookDir = [[NSString alloc] initWithFormat:@"%@/%@/%@", [Util getLocalDocument], BOOK_DIRECTORY, info.uuid];
+	NSArray *files = [[NSFileManager defaultManager] directoryContentsAtPath:bookDir];
+	[info setLength:[files count]];
+	[bookDir release];
 	
+	if ( info.length > 0 ) {
 	[self setMenuBarItems:NO list:YES buy:YES refresh:YES trash:YES];
 	[self releaseListView];
 	[self releaseBackground:_windowMode];
@@ -941,6 +955,7 @@
 	
 	else {
 		[self showBook:_selectBookIndex selectPage:1];
+	}
 	}
 }
 
